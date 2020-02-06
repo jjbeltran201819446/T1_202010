@@ -13,6 +13,9 @@ public class Controller {
 	/* Instancia de la Vista*/
 	private View view;
 	
+	public final static String RUTA_COMPLETA = "./data/comparendos_dei_2018.geojson";
+	public final static String RUTA_INCOMPLETA="./data/comparendos_dei_2018_small.geojson";
+	
 	/**
 	 * Crear la vista y el modelo del proyecto
 	 * @param capacidad tamaNo inicial del arreglo
@@ -36,63 +39,31 @@ public class Controller {
 			int option = lector.nextInt();
 			switch(option){
 				case 1:
-					view.printMessage("--------- \nCrear Arreglo \nDar capacidad inicial del arreglo: ");
-				    int capacidad = lector.nextInt();
-				    modelo = new Modelo(capacidad); 
-				    view.printMessage("Arreglo Dinamico creado");
-				    view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
+					//TODO
+				    modelo = new Modelo();
+				    modelo.leerJson(RUTA_COMPLETA);
+				    view.printMessage("Lista enlazada creada");
+				    view.printMessage("Numero actual de elementos " + modelo.darTamanio() + "\n---------");						
 					break;
-
-				case 2:
-					view.printMessage("--------- \nDar cadena (simple) a ingresar: ");
-					dato = lector.next();
-					modelo.agregar(dato);
-					view.printMessage("Dato agregado");
-					view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
+				case 2: 
+					int tam = modelo.darTamanio();
+					view.printMessage("La lista tiene un total de: "+tam+" elementos.");
 					break;
-
 				case 3:
-					view.printMessage("--------- \nDar cadena (simple) a buscar: ");
-					dato = lector.next();
-					respuesta = modelo.buscar(dato);
-					if ( respuesta != null)
-					{
-						view.printMessage("Dato encontrado: "+ respuesta);
-					}
-					else
-					{
-						view.printMessage("Dato NO encontrado");
-					}
-					view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
+					view.printMessage("--------- \nPor favor dé el ID del comparendo a buscar");
+					String par=lector.next();
+					String mensaje = modelo.buscar(par);
+					view.printMessage(mensaje);
 					break;
-
 				case 4:
-					view.printMessage("--------- \nDar cadena (simple) a eliminar: ");
-					dato = lector.next();
-					respuesta = modelo.eliminar(dato);
-					if ( respuesta != null)
-					{
-						view.printMessage("Dato eliminado "+ respuesta);
-					}
-					else
-					{
-						view.printMessage("Dato NO eliminado");							
-					}
-					view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
-					break;
-
-				case 5: 
-					view.printMessage("--------- \nContenido del Arreglo: ");
-					view.printModelo(modelo);
-					view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
+					view.printMessage("A continuación la lista:\n");
+					modelo.ImprimirLista();
 					break;	
-					
-				case 6: 
+				case 5:
 					view.printMessage("--------- \n Hasta pronto !! \n---------"); 
 					lector.close();
 					fin = true;
 					break;	
-
 				default: 
 					view.printMessage("--------- \n Opcion Invalida !! \n---------");
 					break;
